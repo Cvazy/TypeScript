@@ -1,5 +1,28 @@
-function sum(a: number, b: number): number {
-    return a + b
+interface ITotalPrice {
+  price: number;
+  discount: number;
+  isInstallment: boolean;
+  months: number;
 }
 
-console.log(sum(3, 3))
+const totalPrice = ({
+  price,
+  discount,
+  isInstallment,
+  months,
+}: ITotalPrice): number => {
+  if (!isInstallment) {
+    return price;
+  }
+
+  return Math.round((price / months / 100) * (100 - discount));
+};
+
+const price = totalPrice({
+  price: 100000,
+  discount: 25,
+  isInstallment: true,
+  months: 12,
+});
+
+console.log(price); // 6250
